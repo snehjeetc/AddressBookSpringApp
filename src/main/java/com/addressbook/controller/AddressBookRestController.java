@@ -1,5 +1,7 @@
 package com.addressbook.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +43,7 @@ public class AddressBookRestController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ResponseDTO> addContact(@RequestBody PersonDTO personDto){
+	public ResponseEntity<ResponseDTO> addContact(@Valid @RequestBody PersonDTO personDto){
 		return new ResponseEntity<> (new ResponseDTO(
 									addressBookService.addContact(personDto),
 									"Added Contact successfully"),
@@ -49,7 +51,7 @@ public class AddressBookRestController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ResponseDTO> updateContact(@PathVariable int id, @RequestBody PersonDTO personDTO){
+	public ResponseEntity<ResponseDTO> updateContact(@PathVariable int id,@Valid @RequestBody PersonDTO personDTO){
 		return new ResponseEntity<>(new ResponseDTO(
 									addressBookService.updateContact(id, personDTO),
 									"Updated contact successfully"),
