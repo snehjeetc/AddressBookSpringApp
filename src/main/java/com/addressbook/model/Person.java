@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.addressbook.controller.dto.PersonDTO;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,9 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Person {
-	private int id;
+	private Integer id;
 	private String name;
 	private String phoneNumber;
 	private String email;
@@ -26,12 +24,23 @@ public class Person {
 		counter = new AtomicInteger();
 	}
 	
+	public void generateId() {
+		this.id = counter.incrementAndGet();
+	}
+	
 	public Person(PersonDTO personDto) {
-		id = counter.incrementAndGet();
 		this.name = personDto.getName();
 		this.phoneNumber = personDto.getPhoneNumber();
 		this.email = personDto.getEmail();
 		this.address = personDto.getAddress();
+	}
+	
+	public Person(String name, String phoneNumber, String email, Address address) {
+		this.id = counter.incrementAndGet();
+		this.name = name;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
 	}
 	
 }
