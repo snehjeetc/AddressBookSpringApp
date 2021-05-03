@@ -17,7 +17,7 @@ public class AddressBookControllerValidation {
 	private static final String message = "Error while processing request";
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ResponseDTO> hanleMethodArgumentNotValid(
+	public ResponseEntity<ResponseDTO> handleMethodArgumentNotValid(
 									MethodArgumentNotValidException exception){
 		List<String> errorMsgs = exception.getAllErrors()
 										  .stream()	
@@ -25,5 +25,14 @@ public class AddressBookControllerValidation {
 										  .collect(Collectors.toList());
 		return new ResponseEntity<>(
 				new ResponseDTO(errorMsgs, message), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(AddressBookException.class)
+	public ResponseEntity<ResponseDTO> handleAddressBookException(
+										AddressBookException exception){
+		return new ResponseEntity<>(new ResponseDTO(
+									exception.getMessage(),
+									message), 
+									HttpStatus.BAD_REQUEST);
 	}
 }

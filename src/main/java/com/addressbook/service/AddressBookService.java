@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.addressbook.dto.PersonDTO;
+import com.addressbook.exception.AddressBookException;
+import com.addressbook.exception.AddressBookException.EXCEPTION_TYPE;
 import com.addressbook.model.Person;
 
 @Service
@@ -29,7 +31,9 @@ public class AddressBookService implements IAddressBookService{
 		return this.contactList.stream()
 							   .filter(person -> person.getName().equals(name))
 							   .findFirst()
-							   .get();
+							   .orElseThrow(()-> new AddressBookException(
+									   				"Contact doesn't exist", 
+									   				EXCEPTION_TYPE.CONTACT_NOT_FOUND));
 	}
 
 	@Override
@@ -45,7 +49,9 @@ public class AddressBookService implements IAddressBookService{
 		Person person = this.contactList.stream()
 										.filter(p -> p.getId() == id)
 										.findFirst()
-										.get();
+										.orElseThrow(() -> new AddressBookException(
+												"Contact Id doesn't exist",
+												EXCEPTION_TYPE.CONTACT_NOT_FOUND));
 		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 		modelMapper.map(personDto, person);
 		return person;
@@ -58,7 +64,9 @@ public class AddressBookService implements IAddressBookService{
 		Person person = this.contactList.stream()
 										.filter(p -> p.getName().equals(name))
 										.findFirst()
-										.get();
+										.orElseThrow(()-> new AddressBookException(
+												name + " doesn't exist in the address book", 
+												EXCEPTION_TYPE.CONTACT_NOT_FOUND));
 		this.contactList.remove(person);
 		return person;
 	}
