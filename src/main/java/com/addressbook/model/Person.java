@@ -2,7 +2,7 @@ package com.addressbook.model;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.addressbook.controller.dto.PersonDTO;
+import com.addressbook.dto.PersonDTO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

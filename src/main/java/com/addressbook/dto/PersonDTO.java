@@ -1,4 +1,4 @@
-package com.addressbook.controller.dto;
+package com.addressbook.dto;
 
 import com.addressbook.model.Address;
 
