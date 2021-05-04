@@ -1,46 +1,34 @@
 package com.addressbook.model;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import com.addressbook.dto.PersonDTO;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "contact_table")
 public class Person {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String name;
 	private String phoneNumber;
 	private String email;
+	
+	@OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
 	private Address address;
-	
-	private static AtomicInteger counter;
-	
-	static {
-		counter = new AtomicInteger();
-	}
-	
-	public void generateId() {
-		this.id = counter.incrementAndGet();
-	}
-	
-	public Person(PersonDTO personDto) {
-		this.name = personDto.getName();
-		this.phoneNumber = personDto.getPhoneNumber();
-		this.email = personDto.getEmail();
-		this.address = personDto.getAddress();
-	}
-	
-	public Person(String name, String phoneNumber, String email, Address address) {
-		this.id = counter.incrementAndGet();
-		this.name = name;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-	}
-	
+			
 }
